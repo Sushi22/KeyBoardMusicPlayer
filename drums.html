@@ -37,27 +37,46 @@
             <kbd>L</kbd>
          </div>
     </div>
-    <audio data-key="65" src="clap.wav"></audio>
-    <audio data-key="83" src="hihat.wav"></audio>
-    <audio data-key="68" src="boom.wav"></audio>
-    <audio data-key="70" src="openhat.wav"></audio>
-    <audio data-key="71" src="clap.wav"></audio>
-    <audio data-key="72" src="hihat.wav"></audio>
-    <audio data-key="74" src="boom.wav"></audio>
-    <audio data-key="75" src="openhat.wav"></audio>
-    <audio data-key="76" src="hihat.wav"></audio>
+    <audio data-key="65" src="drumbeats/boom.wav"></audio>
+    <audio data-key="83" src="drumbeats/clap.wav"></audio>
+    <audio data-key="68" src="drumbeats/hihat.wav"></audio>
+    <audio data-key="70" src="drumbeats/kick.wav"></audio>
+    <audio data-key="71" src="drumbeats/openhat.wav"></audio>
+    <audio data-key="72" src="drumbeats/ride.wav"></audio>
+    <audio data-key="74" src="drumbeats/snare.wav"></audio>
+    <audio data-key="75" src="drumbeats/tink.wav"></audio>
+    <audio data-key="76" src="drumbeats/tom.wav"></audio>
 
     <script>
         window.addEventListener('keydown',function(e)
         {
             // $("audio").find(`[data-key='${e.keyCode}']`).play();
-    
             const aud=document.querySelector(`audio[data-key="${e.keyCode}"]`);
+            const k=document.querySelector(`.key[data-key="${e.keyCode}"] kbd`);
+            if(!aud)
+            {
+                return;
+            }
             aud.currentTime=0;
             aud.play();
-           
-
+            k.classList.add("playing");
         })
+
+        function removeTransition(e)
+        {
+            if(e.propertyName!=='transform')
+            {
+                return;
+            }
+            this.classList.remove('playing');
+        }
+
+       
+
+        const keys=document.querySelectorAll('kbd');
+        console.log(keys);
+        keys.forEach( key => key.addEventListener('transitionend',removeTransition));
+        
     </script>
 </body>
 </html>
